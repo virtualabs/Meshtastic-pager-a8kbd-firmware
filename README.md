@@ -94,3 +94,5 @@ based on the QWERTY variant. The `FN` key is not considered as a normal key and
 has no scan code available, it is used to access the alternative keys with scan
 codes in blue. Purple keys are notified through the modifiers' bits, the corresponding
 bit being set to 1 when the key is pressed and 0 when it is released.
+
+![Keyboard HID layout](img/hid_layout.png)
