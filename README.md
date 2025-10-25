@@ -3,6 +3,11 @@
 This opensource firmware for the A8 mini 2.4 GHz keyboard from AliExpress
 is provided as-is with absolutely no warranty, use it at your own risk.
 
+This firmware turns the A8 Mini 2.4GHz Bluetooth keyboard into a UART-based
+keyboard. This looks like a dumb idea, unless you want to embed
+an ESP32 into its shell with a screen and use the keyboard to interact with
+it.
+
 ## Requirements
 
 This project must be compile with [Moun River Studio 2 IDE](https://www.mounriver.com/download). A precompiled HEX file is provided in this repository for those who don't want
@@ -11,12 +16,6 @@ to install this IDE.
 [Wchisp](https://github.com/ch32-rs/wchisp) is used to flash this firmware file on the target chip, following the flashing
 procedure detailed below.
 
-## Build from source
-
-- Open the `CH582M.wvproj` file with Moun River Studio 2
-- In the _Project_ menu entry, click _Build_
-- Output _HEX_ file is located in the _obj_ folder
-
 ## Preparing the keyboard PCB
 
 ![Keyboard PCB pinout](img/pcb-pinout.png)
@@ -24,6 +23,11 @@ procedure detailed below.
 The keyboard PCB has an expansion port composed of a 5-pin connector located at top right hand corner
 of the circuit board with pins labeled _PB22_, _3V3_, _UD-_, _UD+_, _GND_.
 
+## Build from source
+
+- Open the `CH582M.wvproj` file with Moun River Studio 2
+- In the _Project_ menu entry, click _Build_
+- Output _HEX_ file is located in the _obj_ folder
 
 ## Flashing firmware
 
@@ -62,6 +66,9 @@ The modifiers bits are defined as follows:
 | 3       | Right Alt  |
 | 4       | Meta (Win) |
 
+
+Example of areport sent when Shift+A is pressed on a QWERTY keyboard: `0xA5 0x02 0x04 0x00 0x00`
+
 ### LED control
 
 The LEDs of the keyboard can be controlled by the host through a specific
@@ -78,6 +85,10 @@ UART message structured as follows:
 Bit 0 of the status LED field drives the wirless LED while bit 1 drives
 the charge LED. Red, green and blue LEDs are RGB LEDs driven as PWM by
 the firmware and used as backlight for the whole keyboard.
+
+To switch on both status LEDs: `0xA6 0x03 0x00 0x00 0x00`.
+
+Or if you prefer to switch on the backlight in white with full intensity: `0xA6 0x00 0x64 0x64 0x64`.
 
 ### Ping/pong
 
